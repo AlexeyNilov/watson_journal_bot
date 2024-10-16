@@ -1,0 +1,15 @@
+[Unit]
+Description=Watson Bot
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=30
+WorkingDirectory=/home/ec2-user/watson/
+ExecStart=/usr/bin/bash /home/ec2-user/watson/infra/start_bot.sh
+User=ec2-user
+Group=ec2-user
+
+[Install]
+WantedBy=multi-user.target

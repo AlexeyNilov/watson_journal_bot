@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup sqlite DB to S3
+After=network.target
+
+[Timer]
+OnCalendar=*-*-* 23:40:00
+
+[Install]
+WantedBy=multi-user.target

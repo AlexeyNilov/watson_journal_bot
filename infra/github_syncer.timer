@@ -1,0 +1,11 @@
+[Unit]
+Description=Sync code from Github
+After=network.target
+
+[Timer]
+OnCalendar=*:0/5
+OnBootSec=10min
+OnUnitActiveSec=15min
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+__pycache__
+.pytest_cache
+.mypy_cache
+.venv
+.vscode
+*.log
+rnd.py
+cache
+conf/settings.py
+*.sqlite
+*.sqlite*
+img/*
+.coverage
+coverage.xml
+htmlcov

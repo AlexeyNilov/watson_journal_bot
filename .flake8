@@ -1,0 +1,5 @@
+[flake8]
+extend-ignore = E402,W503
+extend-exclude = .venv,.pytest_cache,.mypy_cache
+max-complexity = 5
+max-line-length = 128

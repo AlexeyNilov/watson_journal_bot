@@ -8,11 +8,11 @@ Contains the main bot logic:
 - `message.py`: Message handlers for the bot
 - `common.py`: Utility functions for the bot
 
-### conf/
+## conf/
 Configuration files:
 - `settings.py.sample`: Sample configuration file (actual `settings.py` is gitignored)
 
-### data/
+## data/
 Data-related functionality:
 - `fastlite_db.py`: Database setup and table definitions using FastLite
 - `logger.py`: Logging configuration
@@ -22,31 +22,31 @@ Data-related functionality:
 - `view_db.py`: Script to view database contents
 - `schema.sql`: SQL schema for the database
 
-### db/
+## db/
 Database and data files:
-- `db.sqlite`: SQL database
+- `watson.sqlite`: SQL database
 
-### doc/
+## doc/
 Documentation files:
 - `repo.md`: Repository structure
 - `user_story.md`: User stories and feature ideas
 
-### infra/
+## infra/
 Infrastructure and deployment-related files:
 - `start_bot.sh`: Script to start the bot
 - `github_syncer.sh`: Script to sync code from GitHub
 - `backup_to_s3.sh`: Script to backup the database to S3
 - Various systemd service and timer files for automating processes
 
-### model/
+## model/
 Data models:
 
-### sample/
+## sample/
 Sample scripts:
 
-### service/
+## service/
 Business logic and services:
 - `repo.py`: Repository pattern implementation for data access
 
-### test/
+## test/
 Unit tests

@@ -1,0 +1,7 @@
+pytest
+pytest-asyncio
+pre-commit
+mypy
+flake8
+black
+coverage

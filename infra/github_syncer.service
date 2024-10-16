@@ -1,0 +1,12 @@
+[Unit]
+Description=Sync code from Github
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash /home/ec2-user/watson/infra/github_syncer.sh
+User=ec2-user
+Group=ec2-user
+
+[Install]
+WantedBy=multi-user.target
