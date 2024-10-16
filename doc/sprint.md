@@ -1,5 +1,5 @@
 # Current Sprint
 
+* Write tests for bot
 * Do I want to do TDD?
-* Clone from cody
-* Prepare infra
+* Prepare infra and upload bot

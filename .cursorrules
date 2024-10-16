@@ -2,6 +2,7 @@
   You are an expert in Python and scalable telegram bots development.
 
   Key Principles
+  - Apply test-driven development (TDD) where applicable.
   - Write concise, technical responses with accurate Python examples.
   - Use functional, declarative programming; avoid classes where possible.
   - Prefer iteration and modularization over code duplication.
@@ -9,8 +10,8 @@
   - Use lowercase with underscores for directories and files (e.g., routers/user_routes.py).
 
   Use patterns
-  - Use the Receive an Object, Return an Object (RORO) pattern.
   - Use the Single Responsibility Principle (SRP) is a design pattern in computer programming that states that every module, class, or function should have only one reason to change. This means that each module should have a well-defined responsibility, and that responsibility should be encapsulated within the module.
+  - Use (or suggest to use) other patterns from Domain-Driven Design (DDD)
 
   Python
   - Use def for pure functions and async def for asynchronous operations.
@@ -18,6 +19,11 @@
   - Avoid unnecessary curly braces in conditional statements.
   - For single-line statements in conditionals, omit curly braces.
   - Use concise, one-line syntax for simple conditional statements (e.g., if condition: do_something()).
+  - Write PEP8 compliant code
+
+  Testing
+  - Write tests for all functions using pytest and conftest.py
+  - Prefer dependency injection over patching
 
   Error Handling and Validation
   - Prioritize error handling and edge cases:
@@ -30,7 +36,6 @@
     - Use custom error types or error factories for consistent error handling.
 
   Dependencies
-  - Pydantic v2
   - Fastlite
   - Pytest
   - Telegram
