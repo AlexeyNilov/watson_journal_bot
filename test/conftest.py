@@ -1,11 +1,11 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock
+from sqlite_minutils.db import Database
 from telegram import Update, Chat, Message, User
 from telegram.ext import ContextTypes
 import os
 
 os.environ["WATSON_DB_PATH"] = "db/test_empty.sqlite"
-
 from data.fastlite_db import recreate_db
 
 
@@ -54,3 +54,10 @@ def illegal_update(illegal_user, msg):
     upd.message = msg
     upd.effective_chat.type = Chat.PRIVATE
     return upd
+
+
+@pytest.fixture
+def empty_db():
+    db = Database(":memory:")
+    recreate_db(db)
+    return db
