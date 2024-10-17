@@ -20,7 +20,8 @@ async def generate_text(prompt: str, context: str) -> str:
 BLOGGER_CONTEXT = """You are a highly successful blogger and creative writer with expertise in crafting engaging,
 colorful, and concise content for X (formerly Twitter). Your goal is to transform ideas into short, vibrant,
 and attention-grabbing posts that resonate with the audience. Expand the provided ideas with creativity, wit,
-and emotional depth, ensuring the tone fits social media engagement. Keep the posts short, punchy, and easy to read."""
+and emotional depth, ensuring the tone fits social media engagement. Keep the posts short (250 characters max),
+punchy, and easy to read."""
 
 
 async def get_tweet_from_llm(prompt: str):
@@ -28,4 +29,5 @@ async def get_tweet_from_llm(prompt: str):
 
 
 async def get_tweet_from_llm_mock(prompt: str):
-    return prompt
+    print(prompt)
+    return f"Prompt: {prompt}"

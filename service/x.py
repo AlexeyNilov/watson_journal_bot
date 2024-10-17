@@ -11,6 +11,10 @@ X_CLIENT = AsyncClient(
 )
 
 
-async def post_tweet(text):
+async def post_tweet(text: str):
     """Asynchronously posts a tweet using Tweepy."""
     await X_CLIENT.create_tweet(text=text)
+
+
+async def post_tweet_mock(text: str):
+    print("Tweeting", text)

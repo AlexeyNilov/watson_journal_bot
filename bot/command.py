@@ -11,7 +11,8 @@ from telegram import (
 from telegram.ext import ContextTypes
 from bot.common import authorized_only
 from service.event import get_events_for_today
-from service.llm import get_tweet_from_llm_mock
+from service.llm import get_tweet_from_llm
+from service.x import post_tweet
 
 
 @authorized_only
@@ -27,6 +28,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "Here are the available commands:\n\n"
         "/summary 📅 - Show today's events\n"
         "/help ❓ - Show this help message\n"
+        "/x 📰 - Improve and send to X\n"
     )
 
     await update.message.reply_text(message, reply_markup=keyboard)
@@ -45,7 +47,16 @@ async def summary_command(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
 @authorized_only
 async def x_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = await get_tweet_from_llm_mock("test")
+    if not context.args:
+        await update.message.reply_text("No text provided")
+        return
+    input_text = " ".join(context.args)
+    text = await get_tweet_from_llm(input_text)
+    text = text[:280]
+
+    # Store the generated tweet in user_data
+    context.user_data["pending_tweet"] = text
+
     await update.message.reply_text(text)
     keyboard = [
         [
@@ -61,4 +72,15 @@ async def x_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def x_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
-    await query.edit_message_text(text=f"Selected option: {query.data}")
+    if query.data == "yes":
+        # Retrieve the stored tweet from user_data
+        tweet_text = context.user_data.get("pending_tweet")
+        if tweet_text:
+            await query.edit_message_text(text="Sending to X...")
+            await post_tweet(tweet_text)
+            # Clear the pending tweet after posting
+            del context.user_data["pending_tweet"]
+        else:
+            await query.edit_message_text(text="Error: No pending tweet found.")
+    else:
+        await query.edit_message_text(text="Tweet cancelled.")
