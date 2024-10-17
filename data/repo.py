@@ -1,10 +1,15 @@
 from data.fastlite_db import DB
 from sqlite_minutils.db import Database
-from service.util import get_current_utc_timestamp
+from datetime import datetime, timezone
 
 
 class ProfileNotFound(Exception):
     pass
+
+
+def get_current_utc_timestamp() -> str:
+    """Returns the current UTC timestamp in ISO 8601 format with timezone awareness."""
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 def save_event(text: str, user_id: int, db: Database = DB) -> dict:

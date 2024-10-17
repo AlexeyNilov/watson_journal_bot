@@ -5,7 +5,7 @@ This module contains message handlers for the bot.
 from telegram import Update
 from telegram.ext import ContextTypes
 from bot.common import authorized_only
-from service import repo
+from data import repo
 
 
 @authorized_only

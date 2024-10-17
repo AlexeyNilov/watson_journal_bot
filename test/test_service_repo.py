@@ -1,7 +1,5 @@
 import pytest
-from sqlite_minutils.db import Database
-from service.repo import save_event, get_events, ProfileNotFound
-from service.util import get_current_utc_timestamp
+from data.repo import save_event, get_events, ProfileNotFound, get_current_utc_timestamp
 
 
 def test_save_event(empty_db):

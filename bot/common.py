@@ -4,7 +4,7 @@ This module contains utility functions for the bot.
 
 from telegram import Chat, Update
 from telegram.ext import ContextTypes, ConversationHandler
-from service import repo
+from data import repo
 from functools import wraps
 import logging
 from typing import Callable, Any
