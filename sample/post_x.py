@@ -1,18 +1,14 @@
-import tweepy
+from tweepy.asynchronous import AsyncClient
+from tweepy.errors import TweepyException
 import asyncio
-
-# Replace with your Twitter App's credentials
-API_KEY = "YOUR_API_KEY"
-API_SECRET = "YOUR_API_SECRET"
-ACCESS_TOKEN = "YOUR_ACCESS_TOKEN"
-ACCESS_TOKEN_SECRET = "YOUR_ACCESS_TOKEN_SECRET"
+from conf.settings import X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_TOKEN_SECRET
 
 # Initialize the Async Client
-client = tweepy.AsyncClient(
-    consumer_key=API_KEY,
-    consumer_secret=API_SECRET,
-    access_token=ACCESS_TOKEN,
-    access_token_secret=ACCESS_TOKEN_SECRET,
+client = AsyncClient(
+    consumer_key=X_API_KEY,
+    consumer_secret=X_API_SECRET,
+    access_token=X_ACCESS_TOKEN,
+    access_token_secret=X_ACCESS_TOKEN_SECRET,
 )
 
 
@@ -21,7 +17,7 @@ async def post_tweet(text):
     try:
         response = await client.create_tweet(text=text)
         print(f"Tweet posted successfully! ID: {response.data['id']}")
-    except tweepy.TweepyException as e:
+    except TweepyException as e:
         print(f"Failed to post tweet: {e}")
 
 

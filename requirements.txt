@@ -1,4 +1,4 @@
 fastlite
 python-telegram-bot[job-queue]
 openai
-tweepy
+tweepy[async]
