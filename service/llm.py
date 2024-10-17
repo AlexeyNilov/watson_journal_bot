@@ -25,3 +25,7 @@ and emotional depth, ensuring the tone fits social media engagement. Keep the po
 
 async def get_tweet_from_llm(prompt: str):
     return await generate_text(prompt=prompt, context=BLOGGER_CONTEXT)
+
+
+async def get_tweet_from_llm_mock(prompt: str):
+    return prompt

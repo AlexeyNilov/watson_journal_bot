@@ -3,7 +3,7 @@ This module contains utility functions for the bot.
 """
 
 from telegram import Chat, Update
-from telegram.ext import ContextTypes
+from telegram.ext import ContextTypes, ConversationHandler
 from functools import wraps
 import logging
 from typing import Callable, Any
@@ -57,3 +57,9 @@ def authorized_only(handler: Callable) -> Callable:
         return await handler(update, context)
 
     return wrapper
+
+
+async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Handles the cancellation of the conversation."""
+    await update.message.reply_text("Okay, conversation cancelled.")
+    return ConversationHandler.END

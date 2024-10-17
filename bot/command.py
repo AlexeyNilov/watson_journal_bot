@@ -2,10 +2,16 @@
 This module contains command handlers for the bot.
 """
 
-from telegram import Update, ReplyKeyboardMarkup
+from telegram import (
+    Update,
+    ReplyKeyboardMarkup,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+)
 from telegram.ext import ContextTypes
 from bot.common import authorized_only
 from service.event import get_events_for_today
+from service.llm import get_tweet_from_llm_mock
 
 
 @authorized_only
@@ -35,3 +41,24 @@ async def summary_command(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     else:
         events_text = "\n".join(f"• {event.text}" for event in events)
         await update.message.reply_html(f"<b>Today's events:</b>\n{events_text}")
+
+
+@authorized_only
+async def x_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = await get_tweet_from_llm_mock("test")
+    await update.message.reply_text(text)
+    keyboard = [
+        [
+            InlineKeyboardButton("yes", callback_data="yes"),
+            InlineKeyboardButton("no", callback_data="no"),
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text("Send to X?", reply_markup=reply_markup)
+
+
+@authorized_only
+async def x_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text=f"Selected option: {query.data}")
