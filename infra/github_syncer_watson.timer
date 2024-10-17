@@ -1,5 +1,5 @@
 [Unit]
-Description=Sync code from Github
+Description=Sync code from Github for Watson
 After=network.target
 
 [Timer]

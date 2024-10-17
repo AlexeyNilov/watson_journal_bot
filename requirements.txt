@@ -1,4 +1,2 @@
-pydantic
 fastlite
 python-telegram-bot[job-queue]
-pyyaml

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd /home/ec2-user/watson/
+cd /home/ec2-user/watson_journal_bot/
 git fetch origin
 
 # Get the status of local vs remote
