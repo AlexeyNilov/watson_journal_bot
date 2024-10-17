@@ -1,11 +1,23 @@
 import pytest
+from telegram import KeyboardButton
 from bot import command
 
 
 @pytest.mark.asyncio
 async def test_help_command(msg, update, context):
     await command.help_command(update, context)
-    msg.reply_text.assert_called_once_with("Welcome to Watson!")
+    msg.reply_text.assert_called_once()
+    call_args = msg.reply_text.call_args[0][0]
+    assert "Here are the available commands:" in call_args
+    assert "You can use the keyboard below for quick access to commands." in call_args
+
+    keyboard = msg.reply_text.call_args[1]["reply_markup"]
+    assert keyboard.resize_keyboard is True
+    assert keyboard.is_persistent is True
+    assert keyboard.keyboard[-1] == (
+        KeyboardButton(text="/summary"),
+        KeyboardButton(text="/help"),
+    )
 
 
 @pytest.mark.asyncio

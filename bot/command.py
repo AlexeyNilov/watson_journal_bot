@@ -2,7 +2,7 @@
 This module contains command handlers for the bot.
 """
 
-from telegram import Update
+from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ContextTypes
 from bot.common import authorized_only
 from service.event import get_events_for_today
@@ -10,8 +10,21 @@ from service.event import get_events_for_today
 
 @authorized_only
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Help command handler."""
-    await update.message.reply_text("Welcome to Watson!")
+    """Sends a list of available commands to the user with a keyboard menu."""
+    commands = [
+        ["/summary", "/help"],
+    ]
+
+    keyboard = ReplyKeyboardMarkup(commands, resize_keyboard=True, is_persistent=True)
+
+    message = (
+        "Here are the available commands:\n\n"
+        "/summary 📅 - Show today's events\n"
+        "/help ❓ - Show this help message\n"
+        "You can use the keyboard below for quick access to commands."
+    )
+
+    await update.message.reply_text(message, reply_markup=keyboard)
 
 
 @authorized_only
