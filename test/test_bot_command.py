@@ -9,7 +9,6 @@ async def test_help_command(msg, update, context):
     msg.reply_text.assert_called_once()
     call_args = msg.reply_text.call_args[0][0]
     assert "Here are the available commands:" in call_args
-    assert "You can use the keyboard below for quick access to commands." in call_args
 
     keyboard = msg.reply_text.call_args[1]["reply_markup"]
     assert keyboard.resize_keyboard is True

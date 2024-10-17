@@ -21,7 +21,6 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "Here are the available commands:\n\n"
         "/summary 📅 - Show today's events\n"
         "/help ❓ - Show this help message\n"
-        "You can use the keyboard below for quick access to commands."
     )
 
     await update.message.reply_text(message, reply_markup=keyboard)
