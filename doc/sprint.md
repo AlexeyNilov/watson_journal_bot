@@ -1,3 +1,4 @@
 # Current Sprint
 
-* Give me brief overview of the last day
+* /summary - Add summary of the events
+* /x some_text - Prepare blog post expanding on the some_text

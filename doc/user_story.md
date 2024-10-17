@@ -2,12 +2,10 @@
 
 ## Incoming
 
-* Expand and brainstorm the ideas
-* Prepare blog posts
-* Save links
-* Help with retrospection
-* Track emotions
-* Replace Google Keep (for my flows)
+* /todo - get list of tasks (#todo)
+* /brainstorm some_text - brainstorm the ideas
+* /retro - help with retrospection
+* /emo - Track emotions: use conversation based on wheel of feels, with inline buttons
 * Replace Day One
 * Replace or integrate with Todoist
 * Integrate with Perplexity

@@ -1,3 +1,9 @@
-# watson_journal_bot - Journaling assistant based on telegram bot api
+# Watson Journal Bot - Journaling assistant based on telegram bot api
 
-See doc/ for details
+## What can it do?
+
+* Save your ideas, thoughts, and tasks to database
+* Get brief overview of your day
+
+
+## See doc/ for details
