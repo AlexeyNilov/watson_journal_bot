@@ -13,4 +13,7 @@ async def generate_text(prompt: str, context: str) -> str:
             {"role": "user", "content": prompt},
         ],
     )
-    return response.choices[0].message.content.strip()
+
+    resp = response.choices[0].message.content.strip()
+    print(resp)
+    return resp
