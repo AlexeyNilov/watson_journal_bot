@@ -15,5 +15,6 @@ sudo cp -f infra/github_syncer_watson.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable github_syncer_watson.service
 sudo systemctl enable github_syncer_watson.timer
+sudo systemctl start github_syncer_watson.timer
 sudo systemctl enable watson_bot.service
 sudo systemctl start watson_bot.service
