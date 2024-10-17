@@ -9,7 +9,6 @@ cache
 conf/settings.py
 *.sqlite
 *.sqlite*
-img/*
 .coverage
 coverage.xml
 htmlcov
