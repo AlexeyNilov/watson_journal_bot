@@ -12,7 +12,7 @@ from telegram.ext import (
 )
 from data.logger import set_logging
 from bot.common import error_handler
-from bot.command import start_command
+from bot.command import help_command
 from bot.message import parse_message
 
 set_logging()
@@ -21,7 +21,7 @@ set_logging()
 def main():
     application = Application.builder().token(BOT_TOKEN).build()
 
-    application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(CommandHandler("help", help_command))
     application.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND, parse_message)
     )
