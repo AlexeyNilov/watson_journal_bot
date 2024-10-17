@@ -2,7 +2,7 @@
 
 ## Incoming
 
-* /todo - get list of tasks (#todo)
+* /todo - get list of tasks (#todo), how to remove tasks
 * /brainstorm some_text - brainstorm the ideas
 * /retro - help with retrospection
 * /emo - Track emotions: use conversation based on wheel of feels, with inline buttons

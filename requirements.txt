@@ -1,2 +1,3 @@
 fastlite
 python-telegram-bot[job-queue]
+openai
