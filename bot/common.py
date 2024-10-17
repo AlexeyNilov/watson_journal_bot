@@ -3,8 +3,7 @@ This module contains utility functions for the bot.
 """
 
 from telegram import Chat, Update
-from telegram.ext import ContextTypes, ConversationHandler
-from data import repo
+from telegram.ext import ContextTypes
 from functools import wraps
 import logging
 from typing import Callable, Any
@@ -51,7 +50,7 @@ def authorized_only(handler: Callable) -> Callable:
 
         if update.effective_user.id not in AUTHORIZED_IDS:
             await update.message.reply_text(
-                "Sorry, you are not authorized to use this bot, /join first"
+                "Sorry, you are not authorized to use this bot"
             )
             return
 
