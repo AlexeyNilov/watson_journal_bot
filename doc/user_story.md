@@ -2,7 +2,6 @@
 
 ## Incoming
 
-* Give me brief overview of the last day
 * Expand and brainstorm the ideas
 * Prepare blog posts
 * Save links
