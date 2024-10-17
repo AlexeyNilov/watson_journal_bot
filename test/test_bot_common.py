@@ -40,7 +40,7 @@ async def test_authorized_only_decorator(update, context):
 async def test_authorized_only_decorator_unauthorized(illegal_update, context):
     @common.authorized_only
     async def test_handler(update, context):
-        return "Success"
+        pass
 
     await test_handler(illegal_update, context)
 
@@ -55,7 +55,7 @@ async def test_authorized_only_decorator_non_private_chat(update, context):
 
     @common.authorized_only
     async def test_handler(update, context):
-        return "Success"
+        pass
 
     await test_handler(update, context)
 
