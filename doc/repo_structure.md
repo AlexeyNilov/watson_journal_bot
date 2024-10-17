@@ -21,6 +21,7 @@ Data-related functionality:
 - `migrate_db.py`: Database migration script
 - `view_db.py`: Script to view database contents
 - `schema.sql`: SQL schema for the database
+- `repo.py`: Repository pattern implementation for data access
 
 ## db/
 Database and data files:
@@ -46,7 +47,6 @@ Sample scripts:
 
 ## service/
 Business logic and services:
-- `repo.py`: Repository pattern implementation for data access
 
 ## test/
 Unit tests
