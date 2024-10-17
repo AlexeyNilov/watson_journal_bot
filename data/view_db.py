@@ -9,4 +9,3 @@ print(hl_md(t.schema, "sql"))
 
 for e in DB.t.event():
     print(e)
-    break
