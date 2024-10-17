@@ -10,8 +10,13 @@ from data.fastlite_db import recreate_db
 
 
 @pytest.fixture
-def authorized_user() -> User:
-    return User(id=123456789, is_bot=False, first_name="TestUser")
+def user_id():
+    return 123456789
+
+
+@pytest.fixture
+def authorized_user(user_id) -> User:
+    return User(id=user_id, is_bot=False, first_name="TestUser")
 
 
 @pytest.fixture
