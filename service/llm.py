@@ -7,7 +7,7 @@ from functools import lru_cache
 def read_file(file_path: str) -> str:
     """Reads the content of a text file and returns it as a string."""
     with open(file_path, "r", encoding="utf-8") as f:
-        return f.read()
+        return f.read().strip()
 
 
 OPENAI_CLIENT = AsyncOpenAI(api_key=OPENAI_API_KEY)
