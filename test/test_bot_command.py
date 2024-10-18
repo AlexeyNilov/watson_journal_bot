@@ -1,7 +1,6 @@
 import pytest
 from telegram import KeyboardButton
 from bot import command
-from service.event import Event
 
 
 @pytest.mark.asyncio
@@ -65,8 +64,8 @@ async def test_s_command_no_events(update, context, mocker):
 async def test_s_command_with_events(update, context, mocker):
     context.args = ["search", "term"]
     mock_events = [
-        Event(id=1, text="Event 1", user_id=update.effective_user.id),
-        Event(id=2, text="Event 2", user_id=update.effective_user.id),
+        {"id": 1, "text": "Event 1", "user_id": update.effective_user.id},
+        {"id": 2, "text": "Event 2", "user_id": update.effective_user.id},
     ]
     mocker.patch("bot.command.search_events", return_value=mock_events)
 
