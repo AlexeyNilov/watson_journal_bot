@@ -12,7 +12,7 @@ from telegram.ext import ContextTypes
 from bot.common import authorized_only
 from data.repo import search_events
 from service.event import get_events_for_today
-from service.llm import get_tweet_from_llm
+from service.llm import get_tweet_from_llm, get_retrospection_from_llm
 from service.x import post_tweet
 
 
@@ -27,6 +27,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
     message = (
         "Here are the available commands:\n\n"
+        "/retro 📅 - Retrospection\n"
         "/summary 📅 - Show today's events\n"
         "/help ❓ - Show this help message\n"
         "/x 📰 - Improve and send to X\n"
@@ -45,6 +46,18 @@ async def summary_command(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     else:
         events_text = "\n".join(f"• {event.text}" for event in events)
         await update.message.reply_html(f"<b>Today's events:</b>\n{events_text}")
+
+
+@authorized_only
+async def retro_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Reply with events summary for the current day"""
+    events = get_events_for_today(user_id=update.effective_user.id)
+    if not events:
+        await update.message.reply_html("No events for today.")
+    else:
+        events_text = "\n".join(f"• {event.text}" for event in events)
+        retro_text = await get_retrospection_from_llm(events_text)
+        await update.message.reply_html(f"<b>Retrospection:</b>\n{retro_text}")
 
 
 @authorized_only

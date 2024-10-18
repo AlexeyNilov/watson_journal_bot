@@ -3,8 +3,6 @@
 ## Incoming
 
 * /todo - get list of tasks (#todo), how to remove tasks
-* /summary - Add summary of the events
-* /retro - help with retrospection
 * /emo - Track emotions: use conversation based on wheel of feels, with inline buttons
 * Replace or integrate with Todoist
 * Integrate with Perplexity
