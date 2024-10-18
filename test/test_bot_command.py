@@ -1,6 +1,7 @@
 import pytest
 from telegram import KeyboardButton
 from bot import command
+from service.event import Event
 
 
 @pytest.mark.asyncio
@@ -43,3 +44,43 @@ async def test_summary_command_with_events(msg, update, context, db_with_events)
     assert "• Today's event 2" in call_args
     assert "Yesterday's event" not in call_args
     assert "Tomorrow's event" not in call_args
+
+
+@pytest.mark.asyncio
+async def test_s_command_no_args(update, context):
+    context.args = []
+    await command.s_command(update, context)
+    update.message.reply_text.assert_called_once_with("No text provided")
+
+
+@pytest.mark.asyncio
+async def test_s_command_no_events(update, context, mocker):
+    context.args = ["search", "term"]
+    mocker.patch("bot.command.search_events", return_value=[])
+    await command.s_command(update, context)
+    update.message.reply_text.assert_called_once_with("No events found")
+
+
+@pytest.mark.asyncio
+async def test_s_command_with_events(update, context, mocker):
+    context.args = ["search", "term"]
+    mock_events = [
+        Event(id=1, text="Event 1", user_id=update.effective_user.id),
+        Event(id=2, text="Event 2", user_id=update.effective_user.id),
+    ]
+    mocker.patch("bot.command.search_events", return_value=mock_events)
+
+    await command.s_command(update, context)
+
+    expected_response = "<b>Search results:</b>\n• Event 1\n• Event 2"
+    update.message.reply_html.assert_called_once_with(expected_response)
+
+
+@pytest.mark.asyncio
+async def test_s_command_search_events_called_correctly(update, context, mocker):
+    context.args = ["search", "term"]
+    mock_search_events = mocker.patch("bot.command.search_events", return_value=[])
+
+    await command.s_command(update, context)
+
+    mock_search_events.assert_called_once_with("search term", update.effective_user.id)

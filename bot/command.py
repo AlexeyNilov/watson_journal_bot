@@ -10,6 +10,7 @@ from telegram import (
 )
 from telegram.ext import ContextTypes
 from bot.common import authorized_only
+from data.repo import search_events
 from service.event import get_events_for_today
 from service.llm import get_tweet_from_llm
 from service.x import post_tweet
@@ -29,6 +30,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "/summary 📅 - Show today's events\n"
         "/help ❓ - Show this help message\n"
         "/x 📰 - Improve and send to X\n"
+        "/s 🔍 - Search events\n"
     )
 
     await update.message.reply_text(message, reply_markup=keyboard)
@@ -84,3 +86,17 @@ async def x_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await query.edit_message_text(text="Error: No pending tweet found.")
     else:
         await query.edit_message_text(text="Tweet cancelled.")
+
+
+@authorized_only
+async def s_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not context.args:
+        await update.message.reply_text("No text provided")
+        return
+    input_text = " ".join(context.args)
+    events = search_events(input_text, update.effective_user.id)
+    if not events:
+        await update.message.reply_text("No events found")
+    else:
+        events_text = "\n".join(f"• {event["text"]}" for event in events)
+        await update.message.reply_html(f"<b>Search results:</b>\n{events_text}")
