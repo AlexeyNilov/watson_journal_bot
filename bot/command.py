@@ -27,7 +27,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
     message = (
         "Here are the available commands:\n\n"
-        "/retro 📅 - Retrospection\n"
+        "/retro 🧠 - Retrospection\n"
         "/summary 📅 - Show today's events\n"
         "/help ❓ - Show this help message\n"
         "/x 📰 - Improve and send to X\n"
