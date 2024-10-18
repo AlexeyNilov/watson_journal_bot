@@ -36,7 +36,7 @@ async def get_tweet_from_llm(prompt: str):
 
 
 async def get_retrospection_from_llm(prompt: str):
-    return await generate_text(prompt=prompt, context=ASSISTANT, model="gpt-4o")
+    return await generate_text(prompt=prompt, context=ASSISTANT)
 
 
 async def get_summary_from_llm(prompt: str):
