@@ -98,5 +98,5 @@ async def s_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not events:
         await update.message.reply_text("No events found")
     else:
-        events_text = "\n".join(f"• {event["text"]}" for event in events)
+        events_text = "\n".join(f"• {event['text']}" for event in events)
         await update.message.reply_html(f"<b>Search results:</b>\n{events_text}")
