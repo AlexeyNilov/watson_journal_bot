@@ -19,4 +19,3 @@ Prioritization and Focus Areas:
 Point out recurring themes or priorities from the input that I should focus on.
 Identify any unintentional distractions or opportunities to simplify.
 Your response should be empathetic, insightful, and actionable.
-Use html tags that Telegram bot can understand in your response.
