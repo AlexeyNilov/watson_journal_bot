@@ -12,7 +12,11 @@ from telegram.ext import ContextTypes
 from bot.common import authorized_only
 from data.repo import search_events
 from service.event import get_events_for_today
-from service.llm import get_tweet_from_llm, get_retrospection_from_llm
+from service.llm import (
+    get_tweet_from_llm,
+    get_retrospection_from_llm,
+    get_summary_from_llm,
+)
 from service.x import post_tweet
 
 
@@ -45,7 +49,8 @@ async def summary_command(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         await update.message.reply_html("No events for today.")
     else:
         events_text = "\n".join(f"• {event.text}" for event in events)
-        await update.message.reply_html(f"<b>Today's events:</b>\n{events_text}")
+        summary = await get_summary_from_llm(events_text)
+        await update.message.reply_html(f"<b>Today's summary:</b>\n{summary}")
 
 
 @authorized_only

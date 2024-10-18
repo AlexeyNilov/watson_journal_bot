@@ -28,6 +28,7 @@ async def generate_text(prompt: str, context: str, model: str = "gpt-4o-mini") -
 
 BLOGGER = read_file("prompts/blogger.md")
 ASSISTANT = read_file("prompts/assistant.md")
+SUMMARIZER = read_file("prompts/summarizer.md")
 
 
 async def get_tweet_from_llm(prompt: str):
@@ -36,3 +37,7 @@ async def get_tweet_from_llm(prompt: str):
 
 async def get_retrospection_from_llm(prompt: str):
     return await generate_text(prompt=prompt, context=ASSISTANT, model="gpt-4o")
+
+
+async def get_summary_from_llm(prompt: str):
+    return await generate_text(prompt=prompt, context=SUMMARIZER)
