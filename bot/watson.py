@@ -20,6 +20,7 @@ from bot.command import (
     x_button,
     s_command,
     retro_command,
+    skippy_command,
 )
 from bot.message import parse_message
 
@@ -35,6 +36,7 @@ def main():
     application.add_handler(CallbackQueryHandler(x_button))
     application.add_handler(CommandHandler("summary", summary_command))
     application.add_handler(CommandHandler("retro", retro_command))
+    application.add_handler(CommandHandler("skippy", skippy_command))
     application.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND, parse_message)
     )

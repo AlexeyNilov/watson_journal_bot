@@ -2,9 +2,6 @@
 
 ## Incoming
 
-* /todo - get list of tasks (#todo), how to remove tasks
-* /emo - Track emotions: use conversation based on wheel of feels, with inline buttons
-* Replace or integrate with Todoist
 * Integrate with Perplexity
 * Info nexus (search everywhere from one place and save research)
 * Manage news feeds

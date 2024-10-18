@@ -1,12 +1,11 @@
-# Watson Journal Bot - Journaling assistant based on telegram bot api
+# Watson Journal Bot - Your Journaling Assistant based on the Telegram Bot API and Powered by GenAI
 
-## What can it do?
+## What Can It Do?
 
-* Save your ideas, thoughts, and tasks to database
-* Use LLM to enchant ideas and post them to X
-* Get brief overview of your day's events
+- **Save Ideas**: Store your thoughts, ideas, and tasks in a database.
+- **/x**: Use an LLM to enhance your ideas and share them on X.
+- **/summary**: Receive a brief overview of your day’s events, powered by LLM insights.
+- **/retro**: Get help with retrospection as the LLM acts as your personal assistant, reflecting on past events and decisions.
+- **/skippy**: Ask Skippy the Magnificent a question.
 
-* TODO /retro - help with retrospection, get LLM point of view in role of assistant
-
-
-## See doc/ for details
+## For more details, see the documentation in the `doc/` directory.

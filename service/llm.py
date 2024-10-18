@@ -26,15 +26,19 @@ async def generate_text(prompt: str, context: str, model: str = "gpt-4o-mini") -
     return response.choices[0].message.content.strip()
 
 
-async def get_tweet_from_llm(prompt: str):
+async def get_tweet(prompt: str):
     return await generate_text(prompt=prompt, context=read_file("prompts/blogger.md"))
 
 
-async def get_retrospection_from_llm(prompt: str):
+async def get_retrospection(prompt: str):
     return await generate_text(prompt=prompt, context=read_file("prompts/assistant.md"))
 
 
-async def get_summary_from_llm(prompt: str):
+async def get_summary(prompt: str):
     return await generate_text(
         prompt=prompt, context=read_file("prompts/summarizer.md")
     )
+
+
+async def ask_skippy(prompt: str):
+    return await generate_text(prompt=prompt, context=read_file("prompts/skippy.md"))

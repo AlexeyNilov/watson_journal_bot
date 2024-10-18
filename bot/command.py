@@ -12,11 +12,7 @@ from telegram.ext import ContextTypes
 from bot.common import authorized_only
 from data.repo import search_events
 from service.event import get_events_for_today
-from service.llm import (
-    get_tweet_from_llm,
-    get_retrospection_from_llm,
-    get_summary_from_llm,
-)
+from service.llm import get_tweet, get_retrospection, get_summary, ask_skippy
 from service.x import post_tweet
 
 
@@ -36,6 +32,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "/help ❓ - Show this help message\n"
         "/x 📰 - Improve and send to X\n"
         "/s 🔍 - Search events\n"
+        "/skippy 🤖 - Ask Skippy\n"
     )
 
     await update.message.reply_text(message, reply_markup=keyboard)
@@ -49,7 +46,7 @@ async def summary_command(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         await update.message.reply_html("No events for today.")
     else:
         events_text = "\n".join(f"• {event.text}" for event in events)
-        summary = await get_summary_from_llm(events_text)
+        summary = await get_summary(events_text)
         await update.message.reply_html(f"<b>Today's summary:</b>\n{summary}")
 
 
@@ -61,7 +58,7 @@ async def retro_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         await update.message.reply_html("No events for today.")
     else:
         events_text = "\n".join(f"• {event.text}" for event in events)
-        retro_text = await get_retrospection_from_llm(events_text)
+        retro_text = await get_retrospection(events_text)
         await update.message.reply_html(f"<b>Retrospection:</b>\n{retro_text}")
 
 
@@ -71,7 +68,7 @@ async def x_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("No text provided")
         return
     input_text = " ".join(context.args)
-    text = await get_tweet_from_llm(input_text)
+    text = await get_tweet(input_text)
     text = text[:280]
 
     # Store the generated tweet in user_data
@@ -118,3 +115,13 @@ async def s_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         events_text = "\n".join(f"• {event['text']}" for event in events)
         await update.message.reply_html(f"<b>Search results:</b>\n{events_text}")
+
+
+@authorized_only
+async def skippy_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not context.args:
+        await update.message.reply_text("No text provided")
+        return
+    input_text = " ".join(context.args)
+    response = await ask_skippy(input_text)
+    await update.message.reply_text(f"{response}")
