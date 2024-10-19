@@ -147,4 +147,4 @@ async def emo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     feelings_path.append(next_feeling)
     sub_feelings = get_sub_feelings(name=next_feeling)
     reply_markup = get_keyboard(sub_feelings)
-    await update.message.reply_text("How do you feel?", reply_markup=reply_markup)
+    await query.edit_message_text(text="How do you feel?", reply_markup=reply_markup)
