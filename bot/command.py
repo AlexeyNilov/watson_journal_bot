@@ -134,7 +134,7 @@ async def skippy_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def emo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = []
     for key in FEELINGS.keys():
-        keyboard.append(InlineKeyboardButton(key, callback_data=key))
+        keyboard.append([InlineKeyboardButton(key, callback_data=key)])
 
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text("What do you feel?", reply_markup=reply_markup)
