@@ -10,9 +10,10 @@ from telegram.ext import (
     MessageHandler,
     filters,
     CallbackQueryHandler,
+    ConversationHandler,
 )
 from data.logger import set_logging
-from bot.common import error_handler
+from bot.common import error_handler, cancel
 from bot.command import (
     help_command,
     summary_command,
@@ -22,6 +23,7 @@ from bot.command import (
     retro_command,
     skippy_command,
     emo_command,
+    emo_button,
 )
 from bot.message import parse_message
 
@@ -31,14 +33,33 @@ set_logging()
 def main():
     application = Application.builder().token(BOT_TOKEN).build()
 
+    x_conversation_handler = ConversationHandler(
+        entry_points=[CommandHandler("x", x_command)],
+        states={
+            0: [
+                CallbackQueryHandler(x_button),
+            ],
+        },
+        fallbacks=[CommandHandler("cancel", callback=cancel)],
+    )
+
+    emo_conversation_handler = ConversationHandler(
+        entry_points=[CommandHandler("emo", emo_command)],
+        states={
+            0: [
+                CallbackQueryHandler(emo_button),
+            ],
+        },
+        fallbacks=[CommandHandler("cancel", callback=cancel)],
+    )
+
+    application.add_handler(x_conversation_handler)
+    application.add_handler(emo_conversation_handler)
     application.add_handler(CommandHandler("help", help_command))
-    application.add_handler(CommandHandler("x", x_command))
     application.add_handler(CommandHandler("s", s_command))
-    application.add_handler(CallbackQueryHandler(x_button))
     application.add_handler(CommandHandler("summary", summary_command))
     application.add_handler(CommandHandler("retro", retro_command))
     application.add_handler(CommandHandler("skippy", skippy_command))
-    application.add_handler(CommandHandler("emo", emo_command))
     application.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND, parse_message)
     )
