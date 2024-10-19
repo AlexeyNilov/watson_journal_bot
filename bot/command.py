@@ -87,9 +87,6 @@ async def x_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text("Send to X?", reply_markup=reply_markup)
 
-
-@authorized_only
-async def x_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     if query.data == "yes":

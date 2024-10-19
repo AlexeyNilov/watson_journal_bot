@@ -9,7 +9,6 @@ from telegram.ext import (
     CommandHandler,
     MessageHandler,
     filters,
-    CallbackQueryHandler,
 )
 from data.logger import set_logging
 from bot.common import error_handler
@@ -17,7 +16,6 @@ from bot.command import (
     help_command,
     summary_command,
     x_command,
-    x_button,
     s_command,
     retro_command,
     skippy_command,
@@ -34,7 +32,6 @@ def main():
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("x", x_command))
     application.add_handler(CommandHandler("s", s_command))
-    application.add_handler(CallbackQueryHandler(x_button))
     application.add_handler(CommandHandler("summary", summary_command))
     application.add_handler(CommandHandler("retro", retro_command))
     application.add_handler(CommandHandler("skippy", skippy_command))
