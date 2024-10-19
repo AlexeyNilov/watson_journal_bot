@@ -2,3 +2,5 @@ fastlite
 python-telegram-bot[job-queue]
 openai
 tweepy[async]
+pyyaml
+git+https://github.com/AlexeyNilov/emotion_tracker.git

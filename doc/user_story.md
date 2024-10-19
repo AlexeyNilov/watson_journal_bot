@@ -4,14 +4,13 @@
 
 * Integrate with Perplexity
 * Info nexus (search everywhere from one place and save research)
-* Manage news feeds
+* Manage news feeds?? /news + news filter AI to keep me out of noise
 
 ## Postponed
 
 * Integrate with Trello??
 * Integrate with Notion
 * /brainstorm some_text - brainstorm the ideas
-
 
 ## Declined
 

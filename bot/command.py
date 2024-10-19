@@ -14,12 +14,14 @@ from data.repo import search_events
 from service.event import get_events_for_today
 from service.llm import get_tweet, get_retrospection, get_summary, ask_skippy
 from service.x import post_tweet
+from feelings.loader import FEELINGS
 
 
 @authorized_only
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Sends a list of available commands to the user with a keyboard menu."""
     commands = [
+        ["/retro", "/emo"],
         ["/summary", "/help"],
     ]
 
@@ -33,6 +35,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "/x 📰 - Improve and send to X\n"
         "/s 🔍 - Search events\n"
         "/skippy 🤖 - Ask Skippy\n"
+        "/emo 🌈 - Track your feelings\n"
     )
 
     await update.message.reply_text(message, reply_markup=keyboard)
@@ -125,3 +128,13 @@ async def skippy_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     input_text = " ".join(context.args)
     response = await ask_skippy(input_text)
     await update.message.reply_text(f"{response}")
+
+
+@authorized_only
+async def emo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    keyboard = []
+    for key in FEELINGS.keys():
+        keyboard.append(InlineKeyboardButton(key, callback_data=key))
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text("What do you feel?", reply_markup=reply_markup)
