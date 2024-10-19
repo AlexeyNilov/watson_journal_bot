@@ -14,7 +14,7 @@ from data.repo import search_events
 from service.event import get_events_for_today
 from service.llm import get_tweet, get_retrospection, get_summary, ask_skippy
 from service.x import post_tweet
-from feelings.loader import FEELINGS
+from feelings.loader import FEELINGS, get_sub_feelings
 
 
 @authorized_only
@@ -130,11 +130,24 @@ async def skippy_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"{response}")
 
 
-@authorized_only
-async def emo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+def get_keyboard(data: list):
     keyboard = []
-    for key in FEELINGS.keys():
+    for key in sorted(data):
         keyboard.append([InlineKeyboardButton(key, callback_data=key)])
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("What do you feel?", reply_markup=reply_markup)
+    return InlineKeyboardMarkup(keyboard)
+
+
+@authorized_only
+async def emo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    feelings_path = list()
+    reply_markup = get_keyboard(list(FEELINGS.keys()))
+    await update.message.reply_text("How do you feel?", reply_markup=reply_markup)
+
+    query = update.callback_query
+    await query.answer()
+    next_feeling = query.data
+    feelings_path.append(next_feeling)
+    sub_feelings = get_sub_feelings(name=next_feeling)
+    reply_markup = get_keyboard(sub_feelings)
+    await update.message.reply_text("How do you feel?", reply_markup=reply_markup)
