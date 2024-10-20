@@ -13,9 +13,6 @@ https://developer.todoist.com/rest/v2/?python#updating-a-task
 
 * Refactor todoist structure, remove info message, leave only clear actions
 
-## Emotions
-* /emo - Track emotions: use https://github.com/AlexeyNilov/emotion_tracker.git
-
 ## Bugs
 
 * check for empty update text

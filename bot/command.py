@@ -148,7 +148,7 @@ async def emo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 @authorized_only
-async def emo_command_step_1(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def emo_command_stage_1(update: Update, context: ContextTypes.DEFAULT_TYPE):
     feelings_path = list()
     query = update.callback_query
     await query.answer()
@@ -162,7 +162,7 @@ async def emo_command_step_1(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
 
 @authorized_only
-async def emo_command_step_2(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def emo_command_stage_2(update: Update, context: ContextTypes.DEFAULT_TYPE):
     feelings_path = context.user_data["feelings"]
     query = update.callback_query
     await query.answer()
@@ -172,4 +172,18 @@ async def emo_command_step_2(update: Update, context: ContextTypes.DEFAULT_TYPE)
     sub_feelings = get_sub_feelings(name=next_feeling)
     reply_markup = get_keyboard(sub_feelings)
     await query.edit_message_text(text="How do you feel?", reply_markup=reply_markup)
+    return 2
+
+
+@authorized_only
+async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    feelings_path = context.user_data["feelings"]
+    query = update.callback_query
+    await query.answer()
+    next_feeling = query.data
+    feelings_path.append(next_feeling)
+    feelings_icon = get_sub_feelings(name=next_feeling)
+    feelings_path.append(feelings_icon)
+    feelings_text = " ".join(feelings_path)
+    await query.edit_message_text(text=feelings_text)
     return ConversationHandler.END
