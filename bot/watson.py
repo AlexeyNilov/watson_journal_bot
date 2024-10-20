@@ -43,6 +43,7 @@ def main():
             ],
         },
         fallbacks=[CommandHandler("cancel", callback=cancel)],
+        per_message=True,
     )
 
     emo_conversation_handler = ConversationHandler(
@@ -59,6 +60,7 @@ def main():
             ],
         },
         fallbacks=[CommandHandler("cancel", callback=cancel)],
+        per_message=True,
     )
 
     application.add_handler(x_conversation_handler)
