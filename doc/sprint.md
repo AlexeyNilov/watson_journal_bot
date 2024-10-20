@@ -13,4 +13,6 @@ https://developer.todoist.com/rest/v2/?python#updating-a-task
 
 * Refactor todoist structure, remove info message, leave only clear actions
 
-## Bugs
+## Bugs && Debt
+
+* Simplify emo_command_stage_1/2/end
