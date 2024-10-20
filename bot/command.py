@@ -158,6 +158,8 @@ async def emo_command_stage_1(update: Update, context: ContextTypes.DEFAULT_TYPE
     await query.answer()
     next_feeling = query.data
     if next_feeling == CANCEL:
+        await query.edit_message_reply_markup(reply_markup=None)
+        await query.edit_message_text(text="Cancelled")
         return ConversationHandler.END
     feelings_path.append(next_feeling)
     context.user_data["feelings"] = feelings_path
@@ -174,6 +176,8 @@ async def emo_command_stage_2(update: Update, context: ContextTypes.DEFAULT_TYPE
     await query.answer()
     next_feeling = query.data
     if next_feeling == CANCEL:
+        await query.edit_message_reply_markup(reply_markup=None)
+        await query.edit_message_text(text="Cancelled")
         return ConversationHandler.END
     feelings_path.append(next_feeling)
     context.user_data["feelings"] = feelings_path
@@ -190,6 +194,8 @@ async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TY
     await query.answer()
     next_feeling = query.data
     if next_feeling == CANCEL:
+        await query.edit_message_reply_markup(reply_markup=None)
+        await query.edit_message_text(text="Cancelled")
         return ConversationHandler.END
     feelings_path.append(next_feeling)
     feelings_icon = get_sub_feelings(name=next_feeling)
