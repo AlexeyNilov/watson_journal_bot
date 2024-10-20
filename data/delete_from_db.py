@@ -4,4 +4,5 @@ t = DB.t.event
 query = "SELECT * FROM event WHERE text LIKE 'I feel';"
 events = DB.q(query)
 for event in events:
-    t.delete(event)
+    t.delete(event["id"])
+    print(event, "deleted")
