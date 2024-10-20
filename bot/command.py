@@ -15,6 +15,7 @@ from service.event import get_events_for_today
 from service.llm import get_tweet, get_retrospection, get_summary, ask_skippy
 from service.x import post_tweet
 from feelings.loader import FEELINGS, get_sub_feelings
+from service.todoist import add_task
 
 
 CANCEL = "#cancel#"
@@ -39,6 +40,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "/s 🔍 - Search events\n"
         "/skippy 🤖 - Ask Skippy\n"
         "/emo 🌈 - Track your feelings\n"
+        "/todo 📝 - Add a task to your Todoist\n"
     )
 
     await update.message.reply_text(message, reply_markup=keyboard)
@@ -206,3 +208,13 @@ async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TY
     await query.edit_message_text(text=feelings_text)
     save_event(text=feelings_text, user_id=update.effective_user.id)
     return ConversationHandler.END
+
+
+@authorized_only
+async def todo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not context.args:
+        await update.message.reply_text("No text provided")
+        return
+    input_text = " ".join(context.args)
+    await add_task(input_text)
+    await update.message.set_reaction("👍")

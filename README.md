@@ -7,5 +7,7 @@
 - **/summary**: Receive a brief overview of your day’s events, powered by LLM insights.
 - **/retro**: Get help with retrospection as the LLM acts as your personal assistant, reflecting on past events and decisions.
 - **/skippy**: Ask Skippy the Magnificent a question.
+- **/emo**: Narrow down and discover your emotions/feelings.
+- **/todo**: Add a task to your Todoist.
 
 ## For more details, see the documentation in the `doc/` directory.
