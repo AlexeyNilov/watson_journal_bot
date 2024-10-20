@@ -9,7 +9,7 @@ from telegram import (
     InlineKeyboardMarkup,
 )
 from telegram.ext import ContextTypes, ConversationHandler
-from bot.common import authorized_only
+from bot.common import authorized_only, cancel
 from data.repo import search_events, save_event
 from service.event import get_events_for_today
 from service.llm import get_tweet, get_retrospection, get_summary, ask_skippy
@@ -137,6 +137,7 @@ def get_keyboard(data: list):
     for key in sorted(data):
         keyboard.append([InlineKeyboardButton(key, callback_data=key)])
 
+    keyboard.append([InlineKeyboardButton("cancel", callback_data="cancel")])
     return InlineKeyboardMarkup(keyboard)
 
 
@@ -153,6 +154,8 @@ async def emo_command_stage_1(update: Update, context: ContextTypes.DEFAULT_TYPE
     query = update.callback_query
     await query.answer()
     next_feeling = query.data
+    if next_feeling == "cancel":
+        await cancel()
     feelings_path.append(next_feeling)
     context.user_data["feelings"] = feelings_path
     sub_feelings = get_sub_feelings(name=next_feeling)
@@ -167,6 +170,8 @@ async def emo_command_stage_2(update: Update, context: ContextTypes.DEFAULT_TYPE
     query = update.callback_query
     await query.answer()
     next_feeling = query.data
+    if next_feeling == "cancel":
+        await cancel()
     feelings_path.append(next_feeling)
     context.user_data["feelings"] = feelings_path
     sub_feelings = get_sub_feelings(name=next_feeling)
@@ -181,6 +186,8 @@ async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TY
     query = update.callback_query
     await query.answer()
     next_feeling = query.data
+    if next_feeling == "cancel":
+        await cancel()
     feelings_path.append(next_feeling)
     feelings_icon = get_sub_feelings(name=next_feeling)
     feelings_path.append(feelings_icon)
