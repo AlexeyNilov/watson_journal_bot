@@ -9,5 +9,3 @@
 3. urgency
 
 ## Bugs && Debt
-
-* Simplify emo_command_stage_1/2/end

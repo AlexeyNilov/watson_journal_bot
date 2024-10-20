@@ -153,61 +153,63 @@ async def emo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return 0
 
 
-@authorized_only
-async def emo_command_stage_1(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    feelings_path = list()
+async def handle_feeling_selection(
+    update: Update, context: ContextTypes.DEFAULT_TYPE, next_stage: int
+):
     query = update.callback_query
     await query.answer()
     next_feeling = query.data
+
     if next_feeling == CANCEL:
         await query.edit_message_reply_markup(reply_markup=None)
         await query.edit_message_text(text="Cancelled")
         return ConversationHandler.END
+
+    if next_stage == 1:
+        feelings_path = list()
+    else:
+        feelings_path = context.user_data.get("feelings", [])
     feelings_path.append(next_feeling)
     context.user_data["feelings"] = feelings_path
+
+    if next_stage == ConversationHandler.END:
+        return await finalize_feeling_selection(update, context, feelings_path)
+
     sub_feelings = get_sub_feelings(name=next_feeling)
     reply_markup = get_keyboard(sub_feelings)
     await query.edit_message_text(text="How do you feel?", reply_markup=reply_markup)
-    return 1
+    return next_stage
 
 
-@authorized_only
-async def emo_command_stage_2(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    feelings_path = context.user_data["feelings"]
-    query = update.callback_query
-    await query.answer()
-    next_feeling = query.data
-    if next_feeling == CANCEL:
-        await query.edit_message_reply_markup(reply_markup=None)
-        await query.edit_message_text(text="Cancelled")
-        return ConversationHandler.END
-    feelings_path.append(next_feeling)
-    context.user_data["feelings"] = feelings_path
-    sub_feelings = get_sub_feelings(name=next_feeling)
-    reply_markup = get_keyboard(sub_feelings)
-    await query.edit_message_text(text="How do you feel?", reply_markup=reply_markup)
-    return 2
-
-
-@authorized_only
-async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    feelings_path = context.user_data["feelings"]
-    query = update.callback_query
-    await query.answer()
-    next_feeling = query.data
-    if next_feeling == CANCEL:
-        await query.edit_message_reply_markup(reply_markup=None)
-        await query.edit_message_text(text="Cancelled")
-        return ConversationHandler.END
-    feelings_path.append(next_feeling)
-    feelings_icon = get_sub_feelings(name=next_feeling)
+async def finalize_feeling_selection(
+    update: Update, context: ContextTypes.DEFAULT_TYPE, feelings_path: list
+):
+    feelings_icon = get_sub_feelings(name=feelings_path[-1])
     feelings_path.append(feelings_icon)
-    feelings_text = " -> ".join(feelings_path)
-    feelings_text = f"I feel: {feelings_text}"
+    feelings_text = f"I feel: {' -> '.join(feelings_path)}"
+
+    query = update.callback_query
     await query.edit_message_reply_markup(reply_markup=None)
     await query.edit_message_text(text=feelings_text)
     save_event(text=feelings_text, user_id=update.effective_user.id)
     return ConversationHandler.END
+
+
+@authorized_only
+async def emo_command_stage_1(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    return await handle_feeling_selection(update, context, next_stage=1)
+
+
+@authorized_only
+async def emo_command_stage_2(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    return await handle_feeling_selection(update, context, next_stage=2)
+
+
+@authorized_only
+async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    return await handle_feeling_selection(
+        update, context, next_stage=ConversationHandler.END
+    )
 
 
 @authorized_only
