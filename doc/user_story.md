@@ -5,6 +5,7 @@
 * Integrate with Perplexity
 * Info nexus (search everywhere from one place and save research)
 * Manage news feeds?? /news + news filter AI to keep me out of noise
+* Async sqlite/fastlite?
 
 ## Postponed
 
