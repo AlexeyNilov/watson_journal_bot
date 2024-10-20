@@ -187,7 +187,6 @@ async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TY
     feelings_text = " -> ".join(feelings_path)
     feelings_text = f"I feel: {feelings_text}"
     save_event(text=feelings_text, user_id=update.effective_user.id)
-    await query.edit_message_text(
-        text=feelings_text, reply_markup=InlineKeyboardMarkup([])
-    )
+    update.effective_message.edit_reply_markup(None)
+    await query.edit_message_text(text=feelings_text)
     return ConversationHandler.END
