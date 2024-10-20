@@ -13,6 +13,13 @@ import json
 import html
 from telegram.constants import ParseMode
 from conf.settings import AUTHORIZED_IDS
+from warnings import filterwarnings
+from telegram.warnings import PTBUserWarning
+
+
+filterwarnings(
+    action="ignore", message=r".*CallbackQueryHandler", category=PTBUserWarning
+)
 
 
 async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -61,5 +68,4 @@ def authorized_only(handler: Callable) -> Callable:
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Handles the cancellation of the conversation."""
-    await update.message.reply_text("Okay, conversation cancelled.")
     return ConversationHandler.END

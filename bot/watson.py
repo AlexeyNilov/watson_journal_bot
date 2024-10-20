@@ -42,8 +42,7 @@ def main():
                 CallbackQueryHandler(x_command_end),
             ],
         },
-        fallbacks=[CommandHandler("cancel", callback=cancel)],
-        per_message=False,
+        fallbacks=[CallbackQueryHandler(cancel)],
     )
 
     emo_conversation_handler = ConversationHandler(
@@ -59,8 +58,7 @@ def main():
                 CallbackQueryHandler(emo_command_stage_end),
             ],
         },
-        fallbacks=[CommandHandler("cancel", callback=cancel)],
-        per_message=False,
+        fallbacks=[CallbackQueryHandler(cancel)],
     )
 
     application.add_handler(x_conversation_handler)
