@@ -16,3 +16,6 @@ https://developer.todoist.com/rest/v2/?python#updating-a-task
 ## Bugs
 
 * check for empty update text
+* check this warning
+
+Oct 20 07:00:08 ip-172-31-42-22.eu-north-1.compute.internal bash[466499]: /home/ec2-user/watson_journal_bot/bot/watson.py:38: PTBUserWarning: If 'per_message=False', 'CallbackQueryHandler' will not be tracked for every message. Read this FAQ entry to learn more about the per_* settings: https://github.com/python-telegram-bot/python-telegram-bot/wiki/Frequently-Asked-Questions#what-do-the-per_-settings-in-conversationhandler-do.
