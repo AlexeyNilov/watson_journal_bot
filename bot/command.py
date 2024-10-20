@@ -17,6 +17,9 @@ from service.x import post_tweet
 from feelings.loader import FEELINGS, get_sub_feelings
 
 
+CANCEL = "#cancel#"
+
+
 @authorized_only
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Sends a list of available commands to the user with a keyboard menu."""
@@ -137,7 +140,7 @@ def get_keyboard(data: list):
     for key in sorted(data):
         keyboard.append([InlineKeyboardButton(key, callback_data=key)])
 
-    keyboard.append([InlineKeyboardButton("cancel", callback_data="cancel")])
+    keyboard.append([InlineKeyboardButton(CANCEL, callback_data=CANCEL)])
     return InlineKeyboardMarkup(keyboard)
 
 
@@ -154,7 +157,7 @@ async def emo_command_stage_1(update: Update, context: ContextTypes.DEFAULT_TYPE
     query = update.callback_query
     await query.answer()
     next_feeling = query.data
-    if next_feeling == "cancel":
+    if next_feeling == CANCEL:
         await cancel()
     feelings_path.append(next_feeling)
     context.user_data["feelings"] = feelings_path
@@ -170,7 +173,7 @@ async def emo_command_stage_2(update: Update, context: ContextTypes.DEFAULT_TYPE
     query = update.callback_query
     await query.answer()
     next_feeling = query.data
-    if next_feeling == "cancel":
+    if next_feeling == CANCEL:
         await cancel()
     feelings_path.append(next_feeling)
     context.user_data["feelings"] = feelings_path
@@ -186,7 +189,7 @@ async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TY
     query = update.callback_query
     await query.answer()
     next_feeling = query.data
-    if next_feeling == "cancel":
+    if next_feeling == CANCEL:
         await cancel()
     feelings_path.append(next_feeling)
     feelings_icon = get_sub_feelings(name=next_feeling)
