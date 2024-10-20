@@ -9,6 +9,12 @@
 ## Bugs && Debt
 
 * Async sqlite/fastlite?
+* Python as systemd service issues
+```
+watson_bot.service: State 'final-sigterm' timed out. Killing.
+watson_bot.service: Killing process 487176 (python) with signal SIGKILL.
+watson_bot.service: Failed with result 'timeout'.
+```
 
 ## Postponed
 
