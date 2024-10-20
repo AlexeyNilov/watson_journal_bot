@@ -10,7 +10,7 @@ from telegram import (
 )
 from telegram.ext import ContextTypes, ConversationHandler
 from bot.common import authorized_only
-from data.repo import search_events
+from data.repo import search_events, save_event
 from service.event import get_events_for_today
 from service.llm import get_tweet, get_retrospection, get_summary, ask_skippy
 from service.x import post_tweet
@@ -185,5 +185,8 @@ async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TY
     feelings_icon = get_sub_feelings(name=next_feeling)
     feelings_path.append(feelings_icon)
     feelings_text = " -> ".join(feelings_path)
-    await query.edit_message_text(text=f"I feel: {feelings_text}")
+    save_event(text=feelings_text, user_id=update.effective_user.id)
+    await query.edit_message_text(
+        text=f"I feel: {feelings_text}"
+    )  # TODO remove keyboard
     return ConversationHandler.END
