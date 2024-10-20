@@ -184,6 +184,6 @@ async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TY
     feelings_path.append(next_feeling)
     feelings_icon = get_sub_feelings(name=next_feeling)
     feelings_path.append(feelings_icon)
-    feelings_text = " ".join(feelings_path)
+    feelings_text = " -> ".join(feelings_path)
     await update.message.reply_text(f"I feel: {feelings_text}")
     return ConversationHandler.END
