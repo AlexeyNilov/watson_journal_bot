@@ -158,7 +158,7 @@ async def emo_command_stage_1(update: Update, context: ContextTypes.DEFAULT_TYPE
     await query.answer()
     next_feeling = query.data
     if next_feeling == CANCEL:
-        await cancel()
+        await cancel(update, context)
     feelings_path.append(next_feeling)
     context.user_data["feelings"] = feelings_path
     sub_feelings = get_sub_feelings(name=next_feeling)
@@ -174,7 +174,7 @@ async def emo_command_stage_2(update: Update, context: ContextTypes.DEFAULT_TYPE
     await query.answer()
     next_feeling = query.data
     if next_feeling == CANCEL:
-        await cancel()
+        await cancel(update, context)
     feelings_path.append(next_feeling)
     context.user_data["feelings"] = feelings_path
     sub_feelings = get_sub_feelings(name=next_feeling)
@@ -190,7 +190,7 @@ async def emo_command_stage_end(update: Update, context: ContextTypes.DEFAULT_TY
     await query.answer()
     next_feeling = query.data
     if next_feeling == CANCEL:
-        await cancel()
+        await cancel(update, context)
     feelings_path.append(next_feeling)
     feelings_icon = get_sub_feelings(name=next_feeling)
     feelings_path.append(feelings_icon)
