@@ -15,3 +15,7 @@ https://developer.todoist.com/rest/v2/?python#updating-a-task
 
 ## Emotions
 * /emo - Track emotions: use https://github.com/AlexeyNilov/emotion_tracker.git
+
+## Bugs
+
+* check for empty update text

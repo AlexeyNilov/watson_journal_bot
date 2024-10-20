@@ -8,7 +8,7 @@ from telegram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
 )
-from telegram.ext import ContextTypes
+from telegram.ext import ContextTypes, ConversationHandler
 from bot.common import authorized_only
 from data.repo import search_events
 from service.event import get_events_for_today
@@ -90,7 +90,7 @@ async def x_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 @authorized_only
-async def x_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def x_command_end(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     if query.data == "yes":
@@ -105,6 +105,7 @@ async def x_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await query.edit_message_text(text="Error: No pending tweet found.")
     else:
         await query.edit_message_text(text="Tweet cancelled.")
+    return ConversationHandler.END
 
 
 @authorized_only
@@ -147,7 +148,7 @@ async def emo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 @authorized_only
-async def emo_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def emo_command_step_1(update: Update, context: ContextTypes.DEFAULT_TYPE):
     feelings_path = list()
     query = update.callback_query
     await query.answer()
@@ -158,3 +159,17 @@ async def emo_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = get_keyboard(sub_feelings)
     await query.edit_message_text(text="How do you feel?", reply_markup=reply_markup)
     return 1
+
+
+@authorized_only
+async def emo_command_step_2(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    feelings_path = context.user_data["feelings"]
+    query = update.callback_query
+    await query.answer()
+    next_feeling = query.data
+    feelings_path.append(next_feeling)
+    context.user_data["feelings"] = feelings_path
+    sub_feelings = get_sub_feelings(name=next_feeling)
+    reply_markup = get_keyboard(sub_feelings)
+    await query.edit_message_text(text="How do you feel?", reply_markup=reply_markup)
+    return ConversationHandler.END

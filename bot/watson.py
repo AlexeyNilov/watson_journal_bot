@@ -18,12 +18,13 @@ from bot.command import (
     help_command,
     summary_command,
     x_command,
-    x_button,
+    x_command_end,
     s_command,
     retro_command,
     skippy_command,
     emo_command,
-    emo_button,
+    emo_command_step_1,
+    emo_command_step_2,
 )
 from bot.message import parse_message
 
@@ -37,7 +38,7 @@ def main():
         entry_points=[CommandHandler("x", x_command)],
         states={
             0: [
-                CallbackQueryHandler(x_button),
+                CallbackQueryHandler(x_command_end),
             ],
         },
         fallbacks=[CommandHandler("cancel", callback=cancel)],
@@ -47,7 +48,10 @@ def main():
         entry_points=[CommandHandler("emo", emo_command)],
         states={
             0: [
-                CallbackQueryHandler(emo_button),
+                CallbackQueryHandler(emo_command_step_1),
+            ],
+            1: [
+                CallbackQueryHandler(emo_command_step_2),
             ],
         },
         fallbacks=[CommandHandler("cancel", callback=cancel)],
