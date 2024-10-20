@@ -20,7 +20,8 @@ async def generate_text(prompt: str, context: str, model: str = "gpt-4o-mini") -
             {"role": "system", "content": context},
             {"role": "user", "content": prompt},
         ],
-        temperature=1,
+        temperature=0.5,
+        n=1,
     )
 
     return response.choices[0].message.content.strip()
