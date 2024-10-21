@@ -11,6 +11,7 @@ CLIENT = TodoistAPIAsync(TDIST_API_TOKEN)
 
 async def add_task(content: str):
     content = content.strip()
+    due_string = None
     priority = 1
     if ".urg" in content:
         priority += 1
@@ -18,5 +19,14 @@ async def add_task(content: str):
     if ".imp" in content:
         priority += 1
         content = content.replace(".imp", "")
+    if ".today" in content:
+        priority += 1
+        due_string = "Today"
+        content = content.replace(".today", "")
     content = content.strip()
-    await CLIENT.add_task(content=content, labels=["from_watson"], priority=priority)
+    await CLIENT.add_task(
+        content=content,
+        labels=["from_watson"],
+        priority=priority,
+        due_string=due_string,
+    )
