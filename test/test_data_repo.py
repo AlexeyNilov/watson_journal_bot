@@ -1,4 +1,5 @@
 import pytest
+from datetime import datetime, timedelta, timezone
 from data.repo import (
     save_event,
     get_events,
@@ -52,6 +53,8 @@ def test_profile_not_found_exception():
 
 
 def test_search_events(empty_db, user_id):
+    eight_days_back = datetime.now(timezone.utc) - timedelta(days=8)
+    too_old = eight_days_back.isoformat(timespec="seconds")
     events = [
         {
             "time": get_current_utc_timestamp(),
@@ -73,9 +76,14 @@ def test_search_events(empty_db, user_id):
             "user_id": 789,
             "text": "This should not be found",
         },
+        {
+            "time": too_old,
+            "user_id": user_id,
+            "text": "This is an old event",
+        },
     ]
     for event in events:
-        save_event(event["text"], event["user_id"], db=empty_db)
+        save_event(event["text"], event["user_id"], time=event["time"], db=empty_db)
 
     # Test searching for a specific word
     results = search_events("Python", user_id, db=empty_db)

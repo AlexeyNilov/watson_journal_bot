@@ -26,6 +26,15 @@ def get_events(user_id: int, db: Database = DB) -> list[dict]:
     return db.q(query)
 
 
-def search_events(search_text: str, user_id: int, db: Database = DB) -> List[Dict]:
-    query = f"SELECT * FROM event WHERE text LIKE '%{search_text}%' AND user_id = {user_id};"
+def search_events(
+    search_text: str, user_id: int, db: Database = DB, depth: int = 7
+) -> List[Dict]:
+    current_date = datetime.now(tz=timezone.utc).date().isoformat()
+    query = f"""
+    SELECT * FROM event
+    WHERE text LIKE '%{search_text}%'
+    AND user_id = {user_id}
+    AND date(time) BETWEEN date('{current_date}', '-{depth} day') AND date('{current_date}')
+    ORDER BY time ASC;
+    """
     return db.q(query)
